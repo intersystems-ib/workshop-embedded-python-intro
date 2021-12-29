@@ -1,0 +1,22 @@
+    // unexpire passwords for dev mode
+    zn "%SYS"
+    Do ##class(Security.Users).UnExpireUserPasswords("*")
+
+    zn "%SYS" 
+    do $SYSTEM.OBJ.Load("/opt/irisapp/src/Workshop/Installer.cls", "ck") 
+  
+    // run installer: setup environment
+    set sc = ##class(Workshop.Installer).Run(.vars) 
+  
+    zn "WORKSHOP"
+    
+    // load data
+    zpm "install webterminal"
+    
+    // load source
+    set sc = $SYSTEM.OBJ.LoadDir("/opt/irisapp/src", "ck", .errorlog, 1)
+    
+    // generate some data
+    do ##class(Workshop.Data.Person).Populate(50)
+
+    halt
