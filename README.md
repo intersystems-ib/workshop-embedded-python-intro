@@ -18,7 +18,11 @@ You can log in the [Management Portal](http://localhost:52773/csp/sys/UtilHome.c
 Now you can explore different ways to execute Embedded Python in InterSystems IRIS:
 
 # (a). From the Python Shell
-Open [WebTerminal](http://localhost:52773/terminal/) and type the following:
+Open a Terminal session in IRIS:
+```
+docker exec -it iris-python bash
+iris session iris
+```
 
 ## (a.1) Run a class method
 ```
@@ -47,4 +51,19 @@ Phil
 Hi, my name is Phil Jackson
 ```
 
-
+# (b). From a Python script file
+* Check out [test.py](python/test.py)
+* Open a shell session with the IRIS container:
+```
+docker exec -it iris-python bash
+```
+* Run [test.py](python/test.py) Python script:
+```
+irisowner@18e0ceafa4ae:/usr/irissys/bin$ cd /usr/irissys/bin/
+irisowner@18e0ceafa4ae:/usr/irissys/bin$ export IRISNAMESPACE=USER
+irisowner@18e0ceafa4ae:/usr/irissys/bin$ ./irispython /app/python/test.py
+Fibonacci series:
+0 1 1 2 3 5 8 
+InterSystems IRIS vresion:
+IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2021.2 (Build 617U) Thu Dec 9 2021 15:00:18 UTC
+```
