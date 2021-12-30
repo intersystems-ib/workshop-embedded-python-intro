@@ -1,32 +1,45 @@
 Class Workshop.Data.Address Extends (%SerialObject, %Populate)
 {
 
-/// The street address.
-Property Street As %String(MAXLEN = 80, POPSPEC = "Street()");
+Property AddressLine1 As %String(MAXLEN = 80, POPSPEC = "Street()");
 
-/// The city name.
+Property AddressLine2 As %String(MAXLEN = 80);
+
 Property City As %String(MAXLEN = 80, POPSPEC = "City()");
 
-/// The 2-letter state abbreviation.
-Property State As %String(MAXLEN = 2, POPSPEC = "USState()");
+Property State As %String(MAXLEN = 80, POPSPEC = "City()");
 
-/// The 5-digit U.S. Zone Improvement Plan (ZIP) code.
-Property Zip As %String(MAXLEN = 5, POPSPEC = "USZip()");
+Property PostalCode As %String(MAXLEN = 5, POPSPEC = "USZip()");
+
+Method Normalize(addr As %String) [ Language = python ]
+{
+    from scourgify import normalize_address_record
+    normalized = normalize_address_record(addr)
+
+    self.AddressLine1 = normalized['address_line_1']
+    self.AddressLine2 = normalized['address_line_2']
+    self.City = normalized['city']
+    self.State = normalized['state']
+    self.PostalCode = normalized['postal_code']
+}
 
 Storage Default
 {
 <Data name="AddressState">
 <Value name="1">
-<Value>Street</Value>
+<Value>AddressLine1</Value>
 </Value>
 <Value name="2">
-<Value>City</Value>
+<Value>AddressLine2</Value>
 </Value>
 <Value name="3">
-<Value>State</Value>
+<Value>City</Value>
 </Value>
 <Value name="4">
-<Value>Zip</Value>
+<Value>State</Value>
+</Value>
+<Value name="5">
+<Value>PostalCode</Value>
 </Value>
 </Data>
 <State>AddressState</State>

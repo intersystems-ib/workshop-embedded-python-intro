@@ -1,11 +1,5 @@
 
-
-https://learning.intersystems.com/course/view.php?id=1824
-
-https://docs.intersystems.com/irisforhealth20212/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_epython
-
-https://docs.intersystems.com/irisforhealth20212/csp/docbook/DocBook.UI.Page.cls?KEY=AEPYTHON
-
+Intro to using Embedded Python in InterSystems IRIS. You can find more information in [Embedded Python QuickStart](https://learning.intersystems.com/course/view.php?id=1824&ssoPass=1) and [Using Embedded Python](https://docs.intersystems.com/irisforhealth20212/csp/docbook/DocBook.UI.Page.cls?KEY=AEPYTHON)
 
 # Setup
 Run the container we will use as our InterSystems IRIS instance:
@@ -38,7 +32,7 @@ IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2021.2 (Build 617U) Thu 
 >>> 
 ```
 
-## (b). Open a object and display some property
+## (a.2). Open a object and display some property
 Have a look at [Workshop/Data/Person.cls](src/Workshop/Data/Person.cls) and then type the following in the Python shell:
 
 ```
@@ -134,3 +128,31 @@ irisowner@0ba470d8897c:/opt/irisapp$ pip3 install --target /usr/irissys/mgr/pyth
 do ##class(Workshop.PDF).CreateSamplePDF("/app/sample.pdf")
 ```
 
+# (f). Calling a method written in Python
+* Install another Pyton library, now it's for cleaning and formating us addresses.
+* Connect to IRIS instance container
+```
+docker exec -it iris-python bash
+```
+* Install `usaddress-scourgify` library using `pip3` command.
+```
+irisowner@0ba470d8897c:/opt/irisapp$ pip3 install --target /usr/irissys/mgr/python/ usaddress-scourgify
+```
+* Class [Address.cls](src/Workshop/Data/Address.cls) has a method which uses `usaddress-scourgify` that is used to normalize an address and store it as an object
+```
+set address = ##class(Workshop.Data.Address).%New()
+do address.Normalize("One Memorial Drive, 8th Floor, Cambridge, Massachusetts 02142")
+zwrite address
+address=7@Workshop.Data.Address  ; <OREF>
++----------------- general information ---------------
+|      oref value: 7
+|      class name: Workshop.Data.Address
+| reference count: 2
++----------------- attribute values ------------------
+|       AddressLine1 = "ONE MEMORIAL DR"
+|       AddressLine2 = "FL 8TH"
+|               City = "CAMBRIDGE"
+|         PostalCode = "02142"
+|              State = "MA"
++-----------------------------------------------------
+```
