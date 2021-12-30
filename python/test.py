@@ -11,3 +11,8 @@ print('\nInterSystems IRIS version:')
 irisVersion = iris.cls('%SYSTEM.Version').GetVersion()
 print(irisVersion)
 
+# open an object and display some property
+print('\nPerson(1).Firstname:')
+person = iris.cls('Workshop.Data.Person')._OpenId(1)
+print(person.FirstName)
+

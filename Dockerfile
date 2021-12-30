@@ -3,6 +3,11 @@ FROM $IMAGE
 
 USER root
 
+# install tools
+RUN apt-get update && apt-get install -y \
+  python3-pip \
+  && rm -rf /var/lib/apt/lists/*
+
 # change ownership
 RUN chown -R ${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} /opt/irisapp
 WORKDIR /opt/irisapp
