@@ -9,12 +9,14 @@ Property DOB As %Date(POPSPEC = "Date()");
 
 Property HomeAddress As Address;
 
+/// Method implemented in ObjectScript
 Method SayMyName() As %Integer
 {
     write !,"Hi, my name is "_..FirstName_" "_..LastName,!
     quit 1
 }
 
+/// Method implemented in Python
 Method SayMyNamePython() As %Integer [ Language = python ]
 {
     print('Hi, in Python my name is also {} {}'.format(self.FirstName, self.LastName))

@@ -11,6 +11,7 @@ Property State As %String(MAXLEN = 80, POPSPEC = "City()");
 
 Property PostalCode As %String(MAXLEN = 5, POPSPEC = "USZip()");
 
+/// Method that uses Python scourgify library
 Method Normalize(addr As %String) [ Language = python ]
 {
     from scourgify import normalize_address_record

@@ -12,7 +12,7 @@ You can log in the [Management Portal](http://localhost:52773/csp/sys/UtilHome.c
 Now you can explore different ways to execute Embedded Python in InterSystems IRIS:
 
 # (a). From the Python Shell
-Open a Terminal session in IRIS:
+Open a Terminal session in IRIS or simply open [WebTerminal](http://localhost:52773/terminal/)
 ```
 docker exec -it iris-python bash
 iris session iris
@@ -20,7 +20,8 @@ iris session iris
 
 ## (a.1) Run a class method
 ```
-WORKSHOP > do ##class(%SYS.Python).Shell()
+USER>zn "WORKSHOP"
+WORKSHOP> do ##class(%SYS.Python).Shell()
 
 Python 3.8.10 (default, Sep 28 2021, 16:10:42) 
 [GCC 9.3.0] on linuxType quit() or Ctrl-D to exit this shell.
