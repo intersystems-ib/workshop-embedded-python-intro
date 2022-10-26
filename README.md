@@ -1,7 +1,7 @@
 
 Intro to using Embedded Python in InterSystems IRIS. You can find more information in [Embedded Python QuickStart](https://learning.intersystems.com/course/view.php?id=1824&ssoPass=1) and [Using Embedded Python](https://docs.intersystems.com/irisforhealth20212/csp/docbook/DocBook.UI.Page.cls?KEY=AEPYTHON)
 
-<img src="img/intersystems-python-diagrampng.png" width="700px" />
+<img src="img/intersystems-python-diagrampng.png" width="400px" />
 
 # Setup
 Run the container we will use as our InterSystems IRIS instance:
