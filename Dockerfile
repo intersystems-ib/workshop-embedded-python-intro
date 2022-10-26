@@ -1,4 +1,4 @@
-ARG IMAGE=intersystemsdc/irishealth-community:2021.2.0.649.0-zpm
+ARG IMAGE=intersystemsdc/irishealth-community
 FROM $IMAGE
 
 USER root
@@ -8,15 +8,15 @@ RUN apt-get update && apt-get install -y \
   python3-pip \
   && rm -rf /var/lib/apt/lists/*
 
-# change ownership
-RUN chown -R ${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} /opt/irisapp
-WORKDIR /opt/irisapp
-
-USER ${ISC_PACKAGE_MGRUSER}
-
 # copy source
+WORKDIR /opt/irisapp
 COPY iris.script iris.script
 COPY src src
+
+# change ownership
+RUN chown -R ${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} /opt/irisapp
+
+USER ${ISC_PACKAGE_MGRUSER}
 
 # run iris.script
 RUN iris start IRIS \
