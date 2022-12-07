@@ -159,3 +159,19 @@ address=7@Workshop.Data.Address  ; <OREF>
 |              State = "MA"
 +-----------------------------------------------------
 ```
+
+# (g). Calling a method written in Python to create an Excel file from a query
+* Install another Python library, now it's working with Excel files.
+* Connect to IRIS instance container
+```
+docker exec -it iris-python bash
+```
+* Install some libraries using `pip3` command to work with Excel files and dataframes:
+```
+pip3 install --target /usr/irissys/mgr/python/ pandas
+pip3 install --target /usr/irissys/mgr/python/ openpyxl
+```
+* Class [Excel.cls](src/Workshop/Excel.cls) has a method which uses `openpyxl` that creates an Excel file from an IRIS SQL query.
+```
+do ##class(Workshop.Excel).Test()
+```
