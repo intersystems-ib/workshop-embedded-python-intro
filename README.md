@@ -23,7 +23,7 @@ iris session iris
 ## (a.1) Run a class method
 ```
 USER>zn "WORKSHOP"
-WORKSHOP> do ##class(%SYS.Python).Shell()
+WORKSHOP>do ##class(%SYS.Python).Shell()
 
 Python 3.8.10 (default, Sep 28 2021, 16:10:42) 
 [GCC 9.3.0] on linuxType quit() or Ctrl-D to exit this shell.
@@ -38,7 +38,7 @@ IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2021.2 (Build 617U) Thu 
 ## (a.2). Open a object and display some property
 Have a look at [Workshop/Data/Person.cls](src/Workshop/Data/Person.cls) and then type the following in the Python shell:
 
-```
+```python
 >>> person = iris.cls('Workshop.Data.Person')._OpenId(1)
 >>> vars(person)
 {'%%OID': '\x04\x0119\x16\x01Workshop.Data.Person', '%Concurrency': 1, 'LastName': 'Jackson', 'HomeAddress': <iris.Workshop.Data.Address object at 0x7f75d3223e70>, 'FirstName': 'Phil', 'DOB': 39069}
@@ -77,7 +77,7 @@ WORKSHOP>write obj.SayMyNamePython()
 Hi, in Python my name is also Phil Jackson
 ```
 
-```
+```objectscript
 WORKSHOP>do ##class(%SYS.Python).Shell()
 
 Python 3.8.10 (default, Sep 28 2021, 16:10:42) 
@@ -95,8 +95,17 @@ Workshop.Installer
 ```
 
 # (d). In SQL Functions and Store procedures
-* Create a function using SQL and Python
+* Connect to IRIS instance container
 ```
+docker exec -it iris-python bash
+```
+* Now install `python-dateutil` library using `pip3` command.
+```
+irisowner@0ba470d8897c:/opt/irisapp$ pip3 install --target /usr/irissys/mgr/python/ python-dateutil
+```
+
+* Create a function using SQL and Python
+```sql
 CREATE FUNCTION tzconvert(dt DATETIME, tzfrom VARCHAR, tzto VARCHAR)
     RETURNS DATETIME
     LANGUAGE PYTHON
@@ -112,7 +121,7 @@ CREATE FUNCTION tzconvert(dt DATETIME, tzfrom VARCHAR, tzto VARCHAR)
 ```
 
 Now you can simply use it
-```
+```sql
 SELECT tzconvert(now(), 'US/Eastern', 'UTC')
 ```
 
@@ -127,7 +136,7 @@ docker exec -it iris-python bash
 irisowner@0ba470d8897c:/opt/irisapp$ pip3 install --target /usr/irissys/mgr/python/ reportlab
 ```
 * The class [PDF.cls](src/Workshop/PDF.cls) has already a method that imports the installed library using `##class(%SYS.Python).Import()` and use it to create a PDF file.
-```
+```objectscript
 do ##class(Workshop.PDF).CreateSamplePDF("/app/sample.pdf")
 ```
 
@@ -142,7 +151,7 @@ docker exec -it iris-python bash
 irisowner@0ba470d8897c:/opt/irisapp$ pip3 install --target /usr/irissys/mgr/python/ usaddress-scourgify
 ```
 * Class [Address.cls](src/Workshop/Data/Address.cls) has a method which uses `usaddress-scourgify` that is used to normalize an address and store it as an object
-```
+```objectscript
 set address = ##class(Workshop.Data.Address).%New()
 do address.Normalize("One Memorial Drive, 8th Floor, Cambridge, Massachusetts 02142")
 zwrite address
@@ -168,10 +177,9 @@ docker exec -it iris-python bash
 ```
 * Install some libraries using `pip3` command to work with Excel files and dataframes:
 ```
-pip3 install --target /usr/irissys/mgr/python/ pandas
-pip3 install --target /usr/irissys/mgr/python/ openpyxl
+pip3 install --target /usr/irissys/mgr/python/ pandas openpyxl
 ```
 * Class [Excel.cls](src/Workshop/Excel.cls) has a method which uses `openpyxl` that creates an Excel file from an IRIS SQL query.
-```
+```objectscript
 do ##class(Workshop.Excel).Test()
 ```
